@@ -1,0 +1,34 @@
+<html>
+<head>
+  <title>Config DSP</title>
+  <script type="text/javascript" src="configDSP.js"></script>
+  <link rel="stylesheet" type="text/css" href="configDSP.css" />
+</head>
+<body onload=" onPageLoad();">
+  <div id="ab_control" onclick="toggleAB();">
+    <div id="toggle_button">Toggle A/B</div>
+    <div id="AB_indicator"> </div>
+  </div>
+  <div id="import_export">
+    <span id="import_export_title" onclick="toggleImportExport();">Import/Export</span>
+    <div id="import_export_body" style="display:none;">
+      <div class="section">
+        <button class="button" onclick="onExport();" >Export</button>
+      </div>
+      <div class="section">
+        Import Presets:
+        <input type="file" id="fileInput"/>
+        <div id="import_form" style="display:none;">
+        </div>
+      </div>
+    </div>
+  </div>
+  <h1>DSP System (Version: 0.25.3)</h1>
+  <div id="cant_load_warning"><h2>There was an error loading the page.</h2><p>Make sure you are using <a href="http://getfirefox.com">Firefox 3</a>, and that you have JavaScript enabled.</p></div>
+  <div id="message" style="visibility:hidden;">&nbsp;</div>
+
+  <!-- These are build dynamically by the script -->
+  <div id="tabBar"></div>
+  <form id="dynForm"></form>
+</body>
+</html>

@@ -1,0 +1,8 @@
+#!/bin/sh
+echo "Saving random seed..."
+random_seed=/jffs/random-seed
+touch $random_seed
+chmod 600 $random_seed
+poolfile=/proc/sys/kernel/random/poolsize
+[ -r $poolfile ] && bytes=`cat $poolfile` || bytes=512
+dd if=/dev/urandom of=$random_seed count=1 bs=$bytes 2> /dev/null

@@ -1,0 +1,31 @@
+#!/bin/sh
+
+#####
+# Handler script for sddpd, the Device Discovery Protocol daemon developed
+# by Control4. This is meant to be run in perpetuity thanks to the inittab.
+# If you must use another technique for SDDP, touch
+# /var/run/stopsddp and run `killall sddpd`.
+#####
+
+# Wait until the platform has an IP address AND a DNS server is available:
+# until both conditions are met, sddpd cannot make forward progress.
+while [ -f /var/run/waitforip ] || ! grep -qs nameserver /etc/resolv.conf; do
+    sleep 1
+done
+
+while [ -f /var/run/stopsddp ]; do
+    sleep 10
+done
+
+sddpd_opts="-n" # don't daemonize
+
+if [ -f /jffs/dev_sddp.conf ]; then
+  echo "Found /jffs/dev_sddp.conf; using it instead of default /etc/sddp.conf."
+  sddpd_opts="$sddpd_opts -c /jffs/dev_sddp.conf"
+fi
+
+/sbin/sddpd $sddpd_opts
+sddpd_ret=$?
+echo "sddpd stopped running with code:" $sddpd_ret
+
+exit $sddpd_ret

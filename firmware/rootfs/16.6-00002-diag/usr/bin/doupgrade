@@ -1,0 +1,19 @@
+# Kill the anacapad web server.
+# Viper doesn't have "head" or "killall", so we use sed to
+#     extract the first number from the line: -e 's/\([0-9][0-9]*\).*/\1/'
+#             and quit after the first match: -e 'q'
+touch /var/run/stopanacapa
+kill `ps | grep anacapad | sed -e 's/\([0-9][0-9]*\).*/\1/' -e 'q'`
+
+# Don't allow upgrade if serial signature doesn't match
+eval `mdputil | sed -e 's/#.*//'`
+echo "upgrade -F http://169.254.2.2/$1"
+if [ "$SERIALSIG" = "BAD" ]; then
+    echo
+    echo "Bad serial signature.  Use the command above to upgrade manually."
+    echo "BE CAREFUL - PRODUCTION CODE WILL BRICK THIS UNIT!!!!!!!!!!!!!!!!"
+    exit
+fi
+
+# Now do the upgrade via the manufacturing PC.
+upgrade -F http://169.254.2.2/$1

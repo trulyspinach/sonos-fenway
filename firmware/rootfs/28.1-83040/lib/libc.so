@@ -1,0 +1,4 @@
+/* GNU ld script
+   Use the shared library, but some functions are only in
+   the static library, so try that secondarily.  */
+GROUP ( /usr/local/toolchain/sh4-20040827/u/lib/libc.so.6 /usr/local/toolchain/sh4-20040827/u/lib/libc_nonshared.a )

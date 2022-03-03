@@ -1,0 +1,59 @@
+<html>
+    <head><title>add/update custom service descriptor</title></head>
+<body>
+<form action="/customsd" method="POST" accept-charset="UTF-8">
+    SID (240-253 or 255):<br/>
+    <input type="text" size="4" name="sid" value="255" /><br />
+    Service Name (leave blank to erase):<br/>
+    <input type="text" size="32" name="name" /><br />
+    Endpoint URL:<br /> 
+    <input type="text" size="64" name="uri" /><br />
+    Secure Endpoint URL:<br /> 
+    <input type="text" size="64" name="secureUri" /><br />
+    Polling interval (seconds):<br /> 
+    <input type="text" size="12" name="pollInterval" /><br />
+    Authentication SOAP header policy:<br /> 
+    <input type="radio" name="authType" value="UserId" />
+        Session ID<br />
+    <input type="radio" name="authType" value="Anonymous" />
+        Anonymous<br />
+    <input type="radio" name="authType" value="DeviceLink" />
+        Device Link<br />
+    Strings table (optional):<br /> 
+    &nbsp;&nbsp;&nbsp;&nbsp;Version: <input type="text" size="12" name="stringsVersion" value="0" ></input>
+            Uri: <input type="text" size="64" name="stringsUri" /> <br />
+    Presentation map (optional):<br /> 
+    &nbsp;&nbsp;&nbsp;&nbsp;Version: <input type="text" size="12" name="presentationMapVersion" value="0" ></input>
+            Uri: <input type="text" size="64" name="presentationMapUri" /> <br />
+    Container Type<br />
+    <input type="radio" name="containerType" value="MService" checked="checked"/>
+        Music Service<br />
+    <input type="radio" name="containerType" value="SoundLab"/>
+        Sonos Sound Lab<br />
+    Capabilities<br /> 
+    <input type="checkbox" name="caps" value="search" />
+        Search<br />
+    <input type="checkbox" name="caps" value="trFavorites" />
+        Favorites: Adding/Removing Tracks<br />
+    <input type="checkbox" name="caps" value="alFavorites" />
+        Favorites: Adding/Removing Albums<br />
+    <!-- <input type="checkbox" name="caps" value="arFavorites" />
+        Favorites: Adding/Removing Artists<br /> -->
+    <input type="checkbox" name="caps" value="ucPlaylists" />
+        User Content Playlists<br />
+    <input type="checkbox" name="caps" value="logging" />
+        Playback duration logging at track end<br />
+    <input type="checkbox" name="caps" value="playbackLogging" />
+        Playback event logging during track play<br />
+    <input type="checkbox" name="caps" value="accountLogging" />
+        Account logging<br />
+    <input type="checkbox" name="caps" value="extendedMD" />
+        Extended Metadata (for MOAPI-based InfoView)<br />
+    <input type="checkbox" name="caps" value="disableAlarms" />
+        Disable Alarm Support<br />
+    <input type="checkbox" name="caps" value="noMultiAccount" />
+        Disable Multiple Account Support<br />
+    <input type="checkbox" name="caps" value="mediaUriActions" />
+        Support the ability to receive actions (implicit/explicit) for getMediaUri requests<br />
+    <input type="submit" />
+</form>

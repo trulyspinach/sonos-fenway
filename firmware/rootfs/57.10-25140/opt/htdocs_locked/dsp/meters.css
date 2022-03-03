@@ -1,0 +1,15 @@
+/* 
+    Document   : meters.css
+    Created on : Feb 24, 2013, 6:27:30 PM
+    Author     : Simon.Jarvis
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+root { 
+    display: block;
+}
+meter {
+  width: 150px;
+  height: 15px;
+}

@@ -1,0 +1,91 @@
+#!/bin/sh
+
+# copied from wifi.sh
+# we must keep both versions in sync
+get_wifi_type()
+{
+    tmp=`mdputil | grep ^HWFEATURES | awk '{if (match($0, "ATH_AR5416_WIFI")) print "N"; else print "G";}'`
+
+    WIFI_TYPE=`mdputil | grep ^MODEL | awk '{if (match($0, "16")) print "N"; else print "X";}'`
+    if [ "${WIFI_TYPE}" = "X" ] ; then
+        # Fenway
+        WIFI_TYPE=`mdputil | grep ^MODEL | awk '{if (match($0, "8")) print "N"; else print "X";}'`
+    fi
+
+    if [ "${WIFI_TYPE}" = "X" ] ; then
+        WIFI_TYPE=$tmp
+    fi
+
+    echo "${WIFI_TYPE}"
+}
+
+# Determine what driver (802.11G vs 802.11N) to load
+wifiType=`get_wifi_type`
+
+################################################################################
+# To turn a diag-build ZonePlayer from a DUT into an antenna test master:
+#    mkdir /jffs/system; cp /etc/diags/Configure.master /jffs/system/Configure
+# To turn it back again:
+#    rm /jffs/system/Configure
+################################################################################
+   
+# Take down ethernet interface before adding bridge interface
+/sbin/ifconfig eth0 down
+
+# Set up bridge
+# bridge modules is part of the kernel in newer firmwares
+if [ -f /wifi/bridge.o ]; then
+/sbin/insmod /wifi/bridge.o
+fi
+# support 2.6 kernels like fenway
+if [ -f /wifi/bridge.ko ]; then
+/sbin/insmod /wifi/bridge.ko
+fi
+/usr/sbin/brctl addbr br0
+/usr/sbin/brctl sethello br0 1.0
+/usr/sbin/brctl setfd br0 4.0
+/usr/sbin/brctl setmaxage br0 6.0
+
+# Add ethernet interface to bridge
+/sbin/ifconfig eth0 0.0.0.0
+/usr/sbin/brctl addif br0 eth0
+
+# Start up bridge interface with antenna test master IP address
+/sbin/ifconfig br0 169.254.254.254
+
+# Configure wireless interface for manufacturing diagnostics.
+/wifi/$wifiType/athconfig setmode ath0 INFRA
+/wifi/$wifiType/athconfig setssid ath0 `ifconfig ath0 | head -1 | cut -d ' ' -f 11`
+/wifi/$wifiType/athconfig setwepkey ath0 12345678901234567890123456789012
+
+# Bring up wireless interface.  The ifconfig MUST come before setchanel and
+# setantswitch to avoid a hang!  The ath0 wireless interface gets its IP
+# address (169.254.254.254) from the br0 bridge interface.
+/sbin/ifconfig ath0 0.0.0.0
+
+# Configure wireless interface for Channel 1 and Antenna A.
+/wifi/$wifiType/athconfig setchannel ath0 2412
+/wifi/$wifiType/athconfig setantswitch ath0 A
+
+# Disable channel scan                                                     
+/wifi/$wifiType/athconfig csenable ath0 0                                      
+
+# Start WiFi Test server in background
+/jffs/wifitestserver &
+
+#
+# Make sure that the web stuff is in the proper location
+#
+VERSION=`cat /VERSION`
+WEB_VERSION="POO"
+
+if [ -f /jffs/diags/WEB_VERSION ]; then
+  WEB_VERSION=`cat /jffs/diags/WEB_VERSION`
+fi
+
+if [ ${VERSION} != ${WEB_VERSION} ]; then
+  cp /VERSION /jffs/diags/WEB_VERSION
+  cp /usr/bin/master/* /jffs/diags
+  chmod +x /jffs/diags/*.sh
+  sync
+fi

@@ -1,0 +1,5 @@
+#!/bin/sh
+while [ -f /var/run/stopmdns ]; do
+    sleep 10
+done
+exec /wifi/mdnsd -f

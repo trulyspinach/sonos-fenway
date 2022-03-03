@@ -1,0 +1,75 @@
+<?xml version="1.0"?>
+<MetricsConfig version="1.0" rev="1" expires="0" enabled="ON" defaultUploader="">
+    <!-- zpUpnpOp(Fail) -->
+    <!-- zpUpnpSrv (until we add service name) -->
+    <Category name="upnp.GetPositionInfo" uploader-ref="" level="OFF"/>
+    <Category name="upnp.SetVolume" uploader-ref="" level="OFF"/>
+    <Category name="upnp.GetVolume" uploader-ref="" level="OFF"/>
+    <Category name="upnp.ReportUnresponsiveDevice" uploader-ref="" level="OFF"/>
+    <Category name="upnp.GetRemainingSleepTimerDuration" uploader-ref="" level="OFF"/>
+    <Category name="upnp.GetRunningAlarmProperties" uploader-ref="" level="OFF"/>
+    <Category name="upnp.GetHouseholdTimeAtStamp" uploader-ref="" level="OFF"/>
+    <Category name="upnp.GetTimeZoneAndRule" uploader-ref="" level="OFF"/>
+    <Category name="upnp.GetString" uploader-ref="" level="OFF"/>
+    <Category name="upnp.GetMute" uploader-ref="" level="OFF"/>
+    <Category name="upnp.SetMute" uploader-ref="" level="OFF"/>
+    <Category name="upnp.SetRoomCalibrationStatus" uploader-ref="" level="OFF"/>
+    <Category name="upnp.reportPlaySeconds" uploader-ref="" level="OFF"/>
+    <Category name="upnp.GetTransportInfo" uploader-ref="" level="OFF"/>
+    <Category name="upnp.GetTransportSettings" uploader-ref="" level="OFF"/>
+    <Category name="upnp.ReportAlarmStartedRunning" uploader-ref="" level="OFF"/>    
+
+    <Category name="upnpError.GetPositionInfo" uploader-ref="" level="OFF"/>
+    <Category name="upnpError.SetVolume" uploader-ref="" level="OFF"/>
+    <Category name="upnpError.GetVolume" uploader-ref="" level="OFF"/>
+    <Category name="upnpError.ReportUnresponsiveDevice" uploader-ref="" level="OFF"/>
+    <Category name="upnpError.GetRemainingSleepTimerDuration" uploader-ref="" level="OFF"/>
+    <Category name="upnpError.GetRunningAlarmProperties" uploader-ref="" level="OFF"/>
+    <Category name="upnpError.GetHouseholdTimeAtStamp" uploader-ref="" level="OFF"/>
+    <Category name="upnpError.GetTimeZoneAndRule" uploader-ref="" level="OFF"/>
+    <Category name="upnpError.GetString" uploader-ref="" level="OFF"/>
+
+    <!-- muse -->
+    <Category name="muse.areas.getAreas" uploader-ref="" level="OFF"/>
+    <Category name="muse.areas.subscribe" uploader-ref="" level="OFF"/>
+    <Category name="muse.areas.unsubscribe" uploader-ref="" level="OFF"/>
+
+    <Category name="muse.audioClip.subscribe" uploader-ref="" level="OFF"/>
+    <Category name="muse.audioClip.unsubscribe" uploader-ref="" level="OFF"/>
+
+    <Category name="muse.favorites.subscribe" uploader-ref="" level="OFF"/>
+    <Category name="muse.favorites.unsubscribe" uploader-ref="" level="OFF"/>
+
+    <Category name="muse.groupVolume.getVolume" uploader-ref="" level="OFF"/>
+    <Category name="muse.groupVolume.subscribe" uploader-ref="" level="OFF"/>
+    <Category name="muse.groupVolume.unsubscribe" uploader-ref="" level="OFF"/>
+
+    <Category name="muse.groups.getGroups" uploader-ref="" level="OFF"/>
+    <Category name="muse.groups.subscribe" uploader-ref="" level="OFF"/>
+    <Category name="muse.groups.unsubscribe" uploader-ref="" level="OFF"/>
+
+    <Category name="muse.playback.getPlaybackStatus" uploader-ref="" level="OFF"/>
+    <Category name="muse.playback.subscribe" uploader-ref="" level="OFF"/>
+    <Category name="muse.playback.unsubscribe" uploader-ref="" level="OFF"/>
+    <Category name="muse.playbackExtended.subscribe" uploader-ref="" level="OFF"/>
+    <Category name="muse.playbackExtended.unsubscribe" uploader-ref="" level="OFF"/>
+
+    <Category name="muse.playbackMetadata.subscribe" uploader-ref="" level="OFF"/>
+    <Category name="muse.playbackMetadata.unsubscribe" uploader-ref="" level="OFF"/>
+    <Category name="muse.playbackSession.subscribe" uploader-ref="" level="OFF"/>
+    <Category name="muse.playbackSession.unsubscribe" uploader-ref="" level="OFF"/>
+
+    <Category name="muse.playerVolume.duck" uploader-ref="" level="OFF"/>
+    <Category name="muse.playerVolume.getVolume" uploader-ref="" level="OFF"/>
+    <Category name="muse.playerVolume.subscribe" uploader-ref="" level="OFF"/>
+    <Category name="muse.playerVolume.unduck" uploader-ref="" level="OFF"/>
+    <Category name="muse.playerVolume.unsubscribe" uploader-ref="" level="OFF"/>
+
+    <Category name="muse.playlists.getPlaylists" uploader-ref="" level="OFF"/>
+    <Category name="muse.playlists.subscribe" uploader-ref="" level="OFF"/>
+    <Category name="muse.playlists.unsubscribe" uploader-ref="" level="OFF"/>
+
+    <Category name="muse.voice.getVoiceAccounts" uploader-ref="" level="OFF"/>
+    <Category name="muse.voice.subscribe" uploader-ref="" level="OFF"/>
+    <Category name="muse.voice.unsubscribe" uploader-ref="" level="OFF"/>
+</MetricsConfig>

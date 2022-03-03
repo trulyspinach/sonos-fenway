@@ -1,0 +1,6 @@
+#!/bin/sh
+
+mkdir /jffs/system
+cp /etc/Configure.master /jffs/system/Configure
+sync
+/sbin/reboot

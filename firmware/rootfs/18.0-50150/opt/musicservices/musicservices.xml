@@ -1,0 +1,47 @@
+<Services>
+  <Service Id="0" Name="Napster" Version="1.1" Uri="http://napster.sonos-ws-us.com/Napster/Service1.asmx" SecureUri="https://napster.sonos-ws-us.com/Napster/Service1.asmx" ContainerType="MService" Capabilities="31">
+    <Policy Auth="UserId" PollInterval="300"/>
+    <Presentation>
+      <Strings Version="1" Uri="http://update-services.sonos.com/services/napster/string.xml"/>
+      <Logos Small="http://www.napster.com/services/Sonos/SmallLogo.png" Large="http://www.napster.com/services/Sonos/LargeLogo.png"/>
+    </Presentation>
+  </Service>
+  <Service Id="254" Name="RadioTime" Version="1.1" Uri="http://legato.radiotime.com/Radio.asmx" SecureUri="http://legato.radiotime.com/Radio.asmx" ContainerType="MService" Capabilities="0">
+    <Policy Auth="Anonymous" PollInterval="0"/>
+    <Presentation />
+  </Service>
+  <Service Id="2" Name="Deezer" Version="1.1" Uri="http://deezer.sonos-ws-eu.com/Deezer/SonosAPI.php" SecureUri="https://deezer.sonos-ws-eu.com/Deezer/SonosAPI.php" ContainerType="MService" Capabilities="19">
+    <Policy Auth="UserId" PollInterval="60"/>
+    <Presentation />
+  </Service>
+  <Service Id="3" Name="Twitter" Version="1.2" Uri="https://twitter.sonos-ws-eu.com/SocialMsg/Twitter.php" SecureUri="https://twitter.sonos-ws-eu.com/SocialMsg/Twitter.php" ContainerType="MService" Capabilities="256" MaxMessagingChars="140">
+    <Policy Auth="Stateless" PollInterval="0"/>
+    <Presentation />
+  </Service>
+  <Service Id="6" Name="iheartradio" Version="1.1" Uri="http://www.iheartradio.com/cc-common/sonos/production/WSDLAPI.php" SecureUri="http://www.iheartradio.com/cc-common/sonos/production/WSDLAPI.php" ContainerType="MService" Capabilities="0">
+	  <Policy Auth="Anonymous" PollInterval="0"/>
+	  <Presentation />
+  </Service>
+  <Service Id="7" Name="Wolfgang&apos;s Vault" Version="1.1" Uri="http://concerts.wolfgangsvault.com/ws/MOAPI.asmx" SecureUri="http://concerts.wolfgangsvault.com/ws/MOAPI.asmx" ContainerType="MService" Capabilities="3" MaxMessagingChars="0">
+    <Policy Auth="UserId" PollInterval="30"/>
+    <Presentation />
+  </Service>
+  <Service Id="9" Name="Spotify" Version="1.1" Uri="http://spotify.sonos-ws-eu.com/SpotifyMOAPI/Service1.asmx" SecureUri="https://spotify.sonos-ws-eu.com/SpotifyMOAPI/Service1.asmx" ContainerType="MService" Capabilities="1" MaxMessagingChars="0">
+    <Policy Auth="UserId" pollInterval="30"/>
+    <Presentation>
+      <Strings Version="2" Uri="http://update-services.sonos.com/services/Str/spotify.xml"/>
+    </Presentation>
+  </Service>
+  <Service Id="10" Name="anubis.fm" Version="1.1" Uri="http://api.anubis.fm/service/sonos" SecureUri="https://secure.anubis.fm/service/sonos" ContainerType="MService" Capabilities="65" MaxMessagingChars="0">
+  	<Policy Auth="UserId" PollInterval="300"/>
+  	<Presentation>
+  		<Strings Version="1" Uri="http://update-services.sonos.com/services/Str/anubis.xml"/>
+      </Presentation>
+  </Service>
+  <Service Id="11" Name="Rdio" Version="1.1" Uri="https://www.rdio.com/moapi/" SecureUri="https://www.rdio.com/moapi/" ContainerType="MService" Capabilities="595" MaxMessagingChars="0">
+  	<Policy Auth="UserId" PollInterval="60"/>
+  	<Presentation>
+  		<Strings Version="1" Uri="http://update-services.sonos.com/services/Str/rdio.xml"/>
+      </Presentation>
+  </Service>
+</Services>

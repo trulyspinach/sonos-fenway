@@ -1,0 +1,76 @@
+#!/bin/sh
+
+usage() {
+  echo "Usage: $(basename $0) <open|wep|wpa> <ssid> ( <key> )"
+  exit 1
+}
+
+a2h() {
+    temp="$1"
+    while test -n "$temp"; do
+        c=`expr substr "$temp" 1 1`
+        printf '%x' "'$c'"
+        temp=`expr substr "$temp" 2 32`
+    done
+}
+
+
+get_supp_conf() {
+
+  mode="$1"
+  ssid="$2"
+  key="$3"
+
+  ssid_hex=$(a2h "$ssid")
+
+  case $mode in
+    open)
+      /wifi/athconfig stasetkeylen ath0 0
+      echo "network={"
+      echo "ssid=$ssid_hex"
+      echo "scan_ssid=1"
+      echo "key_mgmt=NONE"
+      echo "priority=0"
+      echo "}"
+      ;;
+    wep)
+      if [ -z "$key" ] ; then usage ; fi
+      /wifi/athconfig stasetkeylen ath0 ${#key}
+      echo "network={"
+      echo "ssid=$ssid_hex"
+      echo "scan_ssid=1"
+      echo "wep_key0=$key"
+      echo "wep_tx_keyidx=0"
+      echo "key_mgmt=NONE"
+      echo "priority=0"
+      echo "}"
+      ;;
+    wpa)
+      if [ -z "$key" ] ; then usage ; fi
+      key_hex=$(a2h "$key")
+      /wifi/athconfig stasetkeylen ath0 ${#key_hex}
+      echo "network={"
+      echo "ssid=$ssid_hex"
+      echo "scan_ssid=1"
+      echo "psk=$key_hex"
+      echo "priority=0"
+      echo "}"
+      ;;
+    *)
+      usage ;;
+  esac
+}
+
+if [ -z "$1" ] || [ -z "$2" ]; then
+  usage
+fi
+
+killall wpa_supplicant > /dev/null 2>&1
+get_supp_conf "$1" "$2" "$3" > /tmp/supplicant_conf.tmp
+
+/wifi/wpa_supplicant -s -B -D sonos -i ath0 -b br0 -c /tmp/supplicant_conf.tmp
+
+if [ -f /tmp/udhcpc.pid ]; then
+  kill -USR1 `cat /tmp/udhcpc.pid`
+fi
+

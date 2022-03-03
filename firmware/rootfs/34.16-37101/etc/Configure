@@ -1,0 +1,79 @@
+#!/bin/sh
+
+mount -t proc proc proc
+
+/sbin/ifconfig lo 127.0.0.1 up
+
+mount -t ramfs ramfs /ramdisk
+mkdir -m 777 /ramdisk/var
+mkdir -m 777 /ramdisk/var/run
+mkdir -m 777 /ramdisk/var/log
+mkdir -m 777 /ramdisk/tmp
+mkdir -m 777 /ramdisk/tmp/pub
+mkdir -m 777 /ramdisk/optlog
+mkdir -m 777 /ramdisk/smb
+
+mount -t jffs2 -o noatime /dev/nandjffs /jffs
+mount -t devpts none /dev/pts
+
+/etc/init.d/Srandom
+
+/sbin/insmod /modules/chk.ko
+/sbin/insmod /modules/audiodev.ko
+
+/wifi/netstartd --resetcheckonly
+
+if [ -f /etc/Configure.ART ]; then
+  echo "Running custom ART Configure..."
+  exec /etc/Configure.ART
+else
+  rm -f /jffs/art_build_running
+  rm -f /jffs/art_ipaddr
+fi
+
+if [ -f /jffs/Configure ]; then
+  echo "Running custom Configure..."
+  exec /jffs/Configure
+fi
+
+echo 262143 > /proc/sys/net/core/rmem_max
+echo 0 > /proc/sys/net/ipv4/icmp_echo_ignore_broadcasts
+
+/bin/mdputil -B
+
+wifiType=N
+
+/sbin/insmod /wifi/$wifiType/adf.ko
+/sbin/insmod /wifi/$wifiType/asf.ko
+/sbin/insmod /wifi/$wifiType/ath_hal.ko
+/sbin/insmod /wifi/$wifiType/ath_driver.ko
+
+/sbin/insmod /wifi/bridge.ko
+
+/usr/sbin/setmac
+
+ifconfig eth0 0.0.0.0
+
+SUBMODEL=`/bin/mdputil | /usr/sbin/keyval ^SUBMODEL`
+
+touch /var/run/waitforip
+
+if [ -f /etc/unlocked_build_flag -o -e /jffs/system/Configure.dev ]; then
+    /usr/sbin/inetd
+
+    ln -s /opt/htdocs_locked /tmp/htdocs_locked
+
+    touch /tmp/device_unlocked_flag
+fi
+
+if [ -f /jffs/system/Configure.dev ]; then
+    sh /jffs/system/Configure.dev
+fi
+
+if [ -f /jffs/hosts ]; then
+    touch /jffs/hosts
+else
+    cp /etc/hosts.orig /jffs/hosts
+fi
+
+echo "Configure script complete."

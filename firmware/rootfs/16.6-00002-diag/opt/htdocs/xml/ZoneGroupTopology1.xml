@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<scpd xmlns="urn:schemas-upnp-org:service-1-0">
+  <specVersion>
+    <major>1</major>
+    <minor>0</minor>
+  </specVersion>
+  <serviceStateTable>
+    <stateVariable sendEvents="yes">
+      <name>AvailableSoftwareUpdate</name>
+      <dataType>string</dataType>
+    </stateVariable>
+    <stateVariable sendEvents="yes">
+      <name>ZoneGroupState</name>
+      <dataType>string</dataType>
+    </stateVariable>
+    <stateVariable sendEvents="yes">
+      <name>ThirdPartyMediaServersX</name>
+      <dataType>string</dataType>
+    </stateVariable>
+    <stateVariable sendEvents="yes">
+      <name>AlarmRunSequence</name>
+      <dataType>string</dataType>
+    </stateVariable>
+    <stateVariable sendEvents="no">
+      <name>A_ARG_TYPE_UpdateType</name>
+      <dataType>string</dataType>
+      <allowedValueList>
+        <allowedValue>All</allowedValue>
+        <allowedValue>Software</allowedValue>
+      </allowedValueList>
+    </stateVariable>
+    <stateVariable sendEvents="no">
+      <name>A_ARG_TYPE_CachedOnly</name>
+      <dataType>boolean</dataType>
+    </stateVariable>
+    <stateVariable sendEvents="no">
+      <name>A_ARG_TYPE_UpdateItem</name>
+      <dataType>string</dataType>
+    </stateVariable>
+    <stateVariable sendEvents="no">
+      <name>A_ARG_TYPE_UpdateURL</name>
+      <dataType>string</dataType>
+    </stateVariable>
+    <stateVariable sendEvents="no">
+      <name>A_ARG_TYPE_UpdateFlags</name>
+      <dataType>ui4</dataType>
+    </stateVariable>
+    <stateVariable sendEvents="no">
+      <name>A_ARG_TYPE_Version</name>
+      <dataType>string</dataType>
+    </stateVariable>
+    <stateVariable sendEvents="no">
+      <name>A_ARG_TYPE_MemberID</name>
+      <dataType>string</dataType>
+    </stateVariable>
+    <stateVariable sendEvents="no">
+      <name>A_ARG_TYPE_UnresponsiveDeviceActionType</name>
+      <dataType>string</dataType>
+      <allowedValueList>
+        <allowedValue>Remove</allowedValue>
+        <allowedValue>VerifyThenRemoveSystemwide</allowedValue>
+      </allowedValueList>
+    </stateVariable>
+    <stateVariable sendEvents="no">
+      <name>DiagnosticID</name>
+      <dataType>ui4</dataType>
+    </stateVariable>
+  </serviceStateTable>
+  <actionList>
+    <action>
+      <name>CheckForUpdate</name>
+      <argumentList>
+        <argument>
+          <name>UpdateType</name>
+          <direction>in</direction>
+          <relatedStateVariable>A_ARG_TYPE_UpdateType</relatedStateVariable>
+        </argument>
+        <argument>
+          <name>CachedOnly</name>
+          <direction>in</direction>
+          <relatedStateVariable>A_ARG_TYPE_CachedOnly</relatedStateVariable>
+        </argument>
+        <argument>
+          <name>Version</name>
+          <direction>in</direction>
+          <relatedStateVariable>A_ARG_TYPE_Version</relatedStateVariable>
+        </argument>
+        <argument>
+          <name>UpdateItem</name>
+          <direction>out</direction>
+          <relatedStateVariable>A_ARG_TYPE_UpdateItem</relatedStateVariable>
+        </argument>
+      </argumentList>
+    </action>
+    <action>
+      <name>BeginSoftwareUpdate</name>
+      <argumentList>
+        <argument>
+          <name>UpdateURL</name>
+          <direction>in</direction>
+          <relatedStateVariable>A_ARG_TYPE_UpdateURL</relatedStateVariable>
+        </argument>
+        <argument>
+          <name>Flags</name>
+          <direction>in</direction>
+          <relatedStateVariable>A_ARG_TYPE_UpdateFlags</relatedStateVariable>
+        </argument>
+      </argumentList>
+    </action>
+    <action>
+      <name>ReportUnresponsiveDevice</name>
+      <argumentList>
+        <argument>
+          <name>DeviceUUID</name>
+          <direction>in</direction>
+          <relatedStateVariable>A_ARG_TYPE_MemberID</relatedStateVariable>
+        </argument>
+        <argument>
+          <name>DesiredAction</name>
+          <direction>in</direction>
+          <relatedStateVariable>A_ARG_TYPE_UnresponsiveDeviceActionType</relatedStateVariable>
+        </argument>
+      </argumentList>
+    </action>
+    <action>
+      <name>ReportAlarmStartedRunning</name>
+    </action>
+    <action>
+      <name>SubmitDiagnostics</name>
+      <argumentList>
+        <argument>
+          <name>DiagnosticID</name>
+          <direction>out</direction>
+          <relatedStateVariable>DiagnosticID</relatedStateVariable>
+        </argument>
+      </argumentList>
+    </action>
+  </actionList>
+</scpd>

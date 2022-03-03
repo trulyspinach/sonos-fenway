@@ -1,0 +1,219 @@
+body {
+	font-family: "Helvetica Neue", Arial, Helvetica, Geneva, sans-serif;
+	background-color: #ebf0f6;
+}
+
+h1 {
+	color: #4f555c;
+	margin-left: 25px;
+	font-weight: bold;
+	font-size: 2.5em;
+}
+
+#message {
+	font-size: 1em;
+	margin: 0;
+	padding: 5px 10px;
+	background-color: #fcda78;
+	border: 1px solid #d0b463;
+	display: inline;
+	line-height: 1.75em;
+}
+
+#cant_load_warning {
+	font-size: 1.0em;
+	color: #ececec;
+	padding: 25px;
+	background-color: #d3050a;
+	font-weight: bold;
+	text-align: center;
+}
+#cant_load_warning h2 {
+	font-size: 1.5em;
+}
+#cant_load_warning a {
+	color: #fdf73a;
+}
+
+#ab_control {
+    border: 1px solid black;
+    background-color: #c8c8c8;
+	padding: 4px 8px;
+	position: fixed;
+	right: 15px;
+	top: 15px;
+}
+#ab_control:hover {
+	background-color: #9c9c9c;
+}
+#ab_control:active {
+	background-color: #898989;
+}
+
+#AB_indicator {
+	font-size: 6em;
+	font-weight: bold;
+	text-align: center;
+}
+
+#import_export {
+	position: fixed;
+	right: 200px;
+	top: 15px;
+	background-color: #edddf5;
+	padding: 0;
+    border: 1px solid #000;
+	z-index: 9;
+}
+#import_export_title {
+	float: right;
+	padding: 4px 8px;
+    background-color: #c8c8c8;
+}
+#import_export_title:hover {
+	background-color: #9c9c9c;
+}
+#import_export_title:active {
+	background-color: #898989;
+}
+#import_export_body {
+	padding: 10px;
+}
+#import_export_body .section {
+	margin-top: 35px;
+}
+#import_export .button {
+	color: black;
+    padding: 4px 7px;
+    margin: 0;
+    border: 1px solid #000;
+    background-color: #c8c8c8;
+    text-decoration: none;
+	font-weight: bold;
+	text-align: center;
+}
+#import_export .button:hover {
+	background-color: #9c9c9c;
+}
+#import_export .button:active {
+	background-color: #898989;
+}
+#import_export .hint {
+	font-size: 0.8em;
+	margin: 5px;
+	padding: 5px;
+	text-align: center;
+}
+#import_export #input_submit {
+	padding: 5px;
+	text-align: center;
+}
+
+#tabBar {
+	margin-top: 25px;
+	margin-bottom: 10px;
+	border-bottom: 1px solid black;
+	line-height: 27px;
+}
+
+#tabBar span {
+	border: 1px solid black;
+	background-color: #dcdcdc;
+	margin: 2px 5px;
+	padding: 2px 5px;
+	position: relative;
+	bottom: -1px;
+}
+#tabBar span:hover {
+	background-color: #adadad;
+}
+#tabBar span:active {
+	background-color: #172777;
+	color: white;
+}
+#tabBar span.selected {
+	background-color: #2339b1;
+	color: white;
+}
+
+/* This puts padding around the filter control inputs (type, freq, qf, gain). */
+#eqForm p span {
+    padding: 0px 4px;
+    margin: 0px 2px;
+}
+
+#eqForm p {
+	width: 700px;
+	height: 1.4em;
+	margin: 2px;
+	padding: 0px;
+}
+
+#eqForm h3 {
+	width: 700px;
+	background-color: #cfdff0;
+	padding: 1px 15px;
+	margin: 15px 0px 5px;
+	color: #1a1c1e;
+}
+
+#eqForm h4 {
+	width: 200px;
+	background-color: #cfdff0;
+	padding: 1px 30px;
+	margin: 5px 0px 5px;
+	color: #808080;
+}
+
+#eqForm .dirty {
+	background-color: #f0dd64;
+}
+#eqForm .error {
+	background-color: #d5171d;
+}
+
+#form_buttons {
+    float: right;
+	position: fixed;
+	right: 15px;
+	top: 185px;
+}
+
+.form_button {
+    font-size: 1.15em;
+    color: black;
+    padding: 7px 10px;
+    margin: 5px;
+    border: 1px solid #000;
+    font-weight: bold;
+}
+.disabled_form_button {
+    background-color: #b4b4b4;
+    font-size: 1.15em;
+    color: #6c6c6c;
+    padding: 7px 10px;
+    margin: 5px;
+    border: 1px solid #000;
+    font-weight: bold;
+}
+
+#save_button { background-color: #00d74a; }
+#save_button:hover { background-color: #00bf41; }
+#save_button:active { background-color: #009733; }
+#preview_button { background-color: #ffe100; }
+#preview_button:hover { background-color: #ffba00; }
+#preview_button:active { background-color: #e7a900; }
+#abort_button { background-color: #ff6900; }
+#abort_button:hover { background-color: #d45800; }
+#abort_button:active { background-color: #b34a00; }
+
+#dirty_buttons {
+    margin-bottom: 40px;
+}
+#delete_button { background-color: #ff4d44; }
+#delete_button:hover { background-color: #ea473e; }
+#delete_button:active { background-color: #d24038; }
+#copy_button { background-color: #297ee7; }
+#copy_button:hover { background-color: #2473d4; }
+#copy_button:active { background-color: #2169c1; }
+

@@ -1,0 +1,7 @@
+::sysinit:/etc/Configure
+null::respawn:/wifi/netstartd
+null::respawn:/etc/runanacapa
+/dev/ttyS0::askfirst:/bin/sh
+::ctrlaltdel:/sbin/reboot
+::shutdown:/etc/init.d/rcK
+::restart:/sbin/init

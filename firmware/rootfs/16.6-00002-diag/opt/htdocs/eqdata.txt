@@ -1,0 +1,1 @@
+/jffs/eqdata.txt

@@ -1,0 +1,14 @@
+#!/bin/sh
+echo "Initializing random number generator..."
+random_seed=/jffs/random-seed
+# Carry a random seed from start-up to start-up
+# Load and then save the whole entropy pool
+if [ -f $random_seed ]; then
+    cat $random_seed >/dev/urandom
+else
+    touch $random_seed
+fi
+chmod 600 $random_seed
+poolfile=/proc/sys/kernel/random/poolsize
+[ -r $poolfile ] && bytes=`cat $poolfile` || bytes=512
+dd if=/dev/urandom of=$random_seed count=1 bs=$bytes 2> /dev/null

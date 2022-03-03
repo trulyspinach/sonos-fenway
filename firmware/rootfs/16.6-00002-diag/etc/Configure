@@ -1,0 +1,126 @@
+#!/bin/sh
+
+mount -t proc proc proc
+
+/sbin/ifconfig lo 127.0.0.1 up
+
+# Create the ramdisk
+mount -t ramfs ramfs /ramdisk
+mkdir -m 777 /ramdisk/var
+mkdir -m 777 /ramdisk/var/run
+mkdir -m 777 /ramdisk/var/log
+mkdir -m 777 /ramdisk/tmp
+mkdir -m 777 /ramdisk/optlog
+mkdir -m 777 /ramdisk/smb
+
+# Mount the JFFS2 partition
+mount -t jffs2 -o noatime /dev/nandjffs /jffs
+mount -t devpts none /dev/pts
+
+/etc/init.d/Srandom
+#/sbin/insmod /modules/audiodev.ko
+
+mkdir -p -m 777 /jffs/diags
+# This Configure does not get deleted with factory reset and causes brickage
+#if [ -f /jffs/Configure ]; then
+#sh /jffs/Configure
+
+#else
+
+# Configure the kernel to allow up to 256K socket buffers
+echo 262143 > /proc/sys/net/core/rmem_max
+echo 0 > /proc/sys/net/ipv4/icmp_echo_ignore_broadcasts
+
+# Determine what driver (802.11G vs 802.11N) to load
+# This was what sh4 ZPs use, but upgrade wants HWFEATURES=0 for Wembley
+# wifiType=`mdputil | grep ^HWFEATURES | awk '{if (match($0, "ATH_AR5416_WIFI")) print "N"; else print "G";}'`
+wifiType=N
+
+# Load wireless driver
+if [ -f /jffs/adf.ko ]; then
+/sbin/insmod /jffs/adf.ko
+else
+/sbin/insmod /wifi/$wifiType/adf.ko
+fi
+
+if [ -f /jffs/asf.ko ]; then
+/sbin/insmod /jffs/asf.ko
+else
+/sbin/insmod /wifi/$wifiType/asf.ko
+fi
+
+if [ -f /jffs/ath_hal.ko ]; then
+/sbin/insmod /jffs/ath_hal.ko
+else
+/sbin/insmod /wifi/$wifiType/ath_hal.ko
+fi
+
+if [ -f /jffs/ath_driver.ko ]; then
+/sbin/insmod /jffs/ath_driver.ko
+else
+/sbin/insmod /wifi/$wifiType/ath_driver.ko
+fi
+
+# Set ethernet MAC address based on Wi-Fi MAC address
+/usr/sbin/setmac
+
+# Compute device UUID
+UUIDA=`/sbin/ifconfig eth0 | grep HWaddr | awk '{print $5}' | sed -e 's/://g'`
+UUIDP=`grep ^Port /opt/conf/anacapa.conf | awk '{print $2}'`
+UUID='RINCON_'$UUIDA'0'$UUIDP
+
+# Bring up wireless interface
+/wifi/$wifiType/athconfig setmode ath0 MOBILE
+
+if [ -f /jffs/netsettings.txt ]; then
+    WEPKEY=`grep ^WEPKey /jffs/netsettings.txt | cut -c 10- | cut -f1 -d']'`
+    HHID=`grep ^HouseholdID /jffs/netsettings.txt | cut -c 15- | cut -f1 -d']'`
+    CHANNEL=`grep ^Channel /jffs/netsettings.txt | cut -c 11- | cut -f1 -d']'`
+    FIRSTZP=`grep ^FirstZP /jffs/netsettings.txt | cut -c 11- | cut -f1 -d']'`
+    /wifi/$wifiType/athconfig setwepkey ath0 $WEPKEY
+    /wifi/$wifiType/athconfig setssid ath0 $HHID
+    /wifi/$wifiType/athconfig setchannel ath0 $CHANNEL
+fi
+
+ /sbin/ifconfig ath0 0.0.0.0 
+
+# support telnet access
+/usr/sbin/inetd
+
+# Spoon!
+/usr/bin/forker &
+
+# Execute custom SPL test station configuration script
+if [ -f /jffs/system/Configure-spl ]; then
+    sh /jffs/system/Configure-spl
+
+    # Start up netstartd in demo mode
+    /wifi/netstartd /jffs $UUID demo
+else
+    # Start up netstartd normally
+    /wifi/netstartd /jffs $UUID 
+fi
+
+# Execute custom configuration script
+if [ -f /jffs/system/Configure ]; then
+    sh /jffs/system/Configure
+fi
+
+if [ `ifconfig | grep br0 | wc -l` -eq 0 ]; then
+    # If we aren't at the SPL test station then bring up
+    # the standard DUT Ethernet interface.
+    /sbin/ifconfig eth0 169.254.1.1
+    /sbin/route add 255.255.255.255 eth0
+    /sbin/route add -net 224.0.0.0 netmask 240.0.0.0 eth0
+fi
+
+if [ -f /jffs/hosts ]; then
+    touch /jffs/hosts
+else
+    cp /etc/hosts.orig /jffs/hosts
+fi
+
+# Ping test PC once per second in background to keep its ARP cache fresh
+ping -q 169.254.2.2 &
+
+#fi

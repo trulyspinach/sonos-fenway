@@ -1,0 +1,64 @@
+#!/bin/sh
+
+if [ "${#1}" -ne "0" ]; then
+
+    if [ "${#2}" -ne "0" ]; then
+        WPACONFIG=${2}
+    else
+        WPACONFIG=/var/run/wpa_supplicant.conf
+    fi
+
+    if [ -f /jffs/debug/wpa_proto ]; then
+        WPAPROTO=`cat /jffs/debug/wpa_proto`
+    fi
+    if [ -f /jffs/debug/wpa_ptk ]; then
+        WPAPTK=`cat /jffs/debug/wpa_ptk`
+    fi
+    if [ -f /jffs/debug/wpa_gtk ]; then
+        WPAGTK=`cat /jffs/debug/wpa_gtk`
+    fi
+
+    rm -f ${WPACONFIG}
+    touch ${WPACONFIG}
+
+    SSIDHEX=`/usr/sbin/keyval ^NFWSSID ${1}`
+    KEYHEX=`/usr/sbin/keyval ^NFWPwd ${1}`
+
+    echo "eapol_version=1"    >> ${WPACONFIG}
+    echo "ap_scan=1"          >> ${WPACONFIG}
+
+    echo "network={"          >> ${WPACONFIG}
+    echo "ssid=${SSIDHEX}"    >> ${WPACONFIG}
+    echo "scan_ssid=1"        >> ${WPACONFIG}
+    echo "psk=${KEYHEX}"      >> ${WPACONFIG}
+    if [ "${#WPAPROTO}" -ne "0" ];then
+    echo "proto=${WPAPROTO}"  >> ${WPACONFIG}
+    fi
+    if [ "${#WPAPTK}" -ne "0" ];then
+    echo "pairwise=${WPAPTK}" >> ${WPACONFIG}
+    fi
+    if [ "${#WPAGTK}" -ne "0" ];then
+    echo "group=${WPAGTK}"    >> ${WPACONFIG}
+    fi
+    echo "priority=2"         >> ${WPACONFIG}
+    echo "}"                  >> ${WPACONFIG}
+
+    echo "network={"          >> ${WPACONFIG}
+    echo "ssid=${SSIDHEX}"    >> ${WPACONFIG}
+    echo "scan_ssid=1"        >> ${WPACONFIG}
+    echo "wep_key0=${KEYHEX}" >> ${WPACONFIG}
+    echo "wep_tx_keyidx=0"    >> ${WPACONFIG}
+    echo "key_mgmt=NONE"      >> ${WPACONFIG}
+    echo "priority=1"         >> ${WPACONFIG}
+    echo "}"                  >> ${WPACONFIG}
+
+    echo "network={"          >> ${WPACONFIG}
+    echo "ssid=${SSIDHEX}"    >> ${WPACONFIG}
+    echo "scan_ssid=1"        >> ${WPACONFIG}
+    echo "key_mgmt=NONE"      >> ${WPACONFIG}
+    echo "priority=0"         >> ${WPACONFIG}
+    echo "}"                  >> ${WPACONFIG}
+
+else
+    echo "usage: ${0} <netsettings file> [wpa config file]"
+fi

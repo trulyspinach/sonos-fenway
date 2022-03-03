@@ -1,0 +1,92 @@
+#!/bin/sh
+
+echo "<HTML>"
+echo "<HEAD>"
+echo "<STYLE TYPE=\"text/css\" TITLE=\"Sonos Manufacturing Style Sheet\" MEDIA=screen>"
+echo "<!--"
+echo "BODY { background-color: #a2a29c; }"
+echo "H1   { font-family: Arial, sans-serif; font-size: 40px; font-weight: bold; padding-bottom: 40px; }"
+echo "PRE  { font-family: \"Courier New\", Courier, monospace; font-size: 30px; font-weight: bold; }"
+echo "-->"
+echo "</STYLE>"
+echo "<TITLE>"
+echo "Upgrading Firmware"
+echo "</TITLE>"
+echo "</HEAD>"
+echo "<BODY>"
+echo "<H1>Upgrading Firmware</H1>"
+
+# Check for proper number of args.
+if [ $# -lt 3 ]; then arg=1; fi
+
+# Check for proper region code in MDP.  The first argument to this script is the
+# region code to compare against.
+if [ `/bin/mdputil | grep ^REGION=$1$ | wc -l` != 1 ]; then region=1; fi
+
+# Check for serial number in MDP with Sonos OUI and proper length.  The second
+# argument to this script is the serial number prefix to compare against.  It's
+# expected that 000E581 will be passed for a ZonePlayer and 000E580 will be
+# passed for a Controller.
+if [ `/bin/mdputil | grep ^SERIAL=$2 | wc -c` != 21 ]; then serial=1; fi
+
+# Check for a private key certificate in MDP.
+if [ "`/bin/mdputil -k /dev/null 2>&1`" = "No valid key present" ]; then cert=1; fi
+
+# Bail out if any of the above checks failed
+if [ $arg ] || [ $region ] || [ $serial ] || [ $cert ]; then
+    echo -e "<PRE STYLE=\"font-family: 'Courier New', Courier, monospace; font-size: 30px; font-weight: bold; color:   red\">Cannot upgrade:"
+    # Must encode literal '<' and '>' inside HTML as '&#60;' and '&#62;', respectively.
+    if [ $arg    ]; then echo "   Usage: $0 &#60;region&#62; &#60;serial&#62; &#60;cmd&#62;"; fi
+    if [ $region ]; then echo "   Program region code first."; fi
+    if [ $serial ]; then echo "   Program serial number first."; fi
+    if [ $cert   ]; then echo "   Program certificate first."; fi
+    echo "</PRE>"
+    exit 0
+fi
+
+# Get rid of the first two arguments (already used them above)
+shift 2
+
+# Prevent anacapa from coming back from the dead.
+touch /var/run/stopanacapa
+
+if [ `ps | grep anacapad | wc -l` -gt 1 ]; then
+    # Kill all hh.anacapad or anacapad processes
+    if [ `ps | grep hh\\.anacapad | wc -l` -gt 1 ]; then
+        killall -9 hh.anacapad
+    else
+        killall -9 anacapad
+    fi
+
+    # Wait up to 15 sec. for all the processes to die.
+    # This loop normally exits after one sleep.
+    dead=0
+    timer=0
+    while [ $timer -lt 15 ]; do
+        if [ `ps | grep anacapad | wc -l` -eq 1 ]; then
+            dead=1
+            break;
+        fi
+
+        sleep 1
+        timer=`expr $timer + 1`
+    done
+
+    # Bail out if anacapa is not dead
+    if [ $dead -eq 0 ]; then
+        echo -e "<PRE STYLE=\"font-family: 'Courier New', Courier, monospace; font-weight: bold; color: red\">Web server not dead: exiting</PRE>"
+        exit 0
+    fi
+fi
+
+# clean off the system before upgrade
+rm -rf /jffs
+
+echo "<H1>Timer: $timer</H1>"
+echo -e "<PRE STYLE=\"font-family: 'Courier New', Courier, monospace; font-weight: bold; color: green\">Running \"$@\".</PRE>"
+
+# Execute whatever command is left on the command line.
+# Presumably, this is something like "upgrade -f <.upd URL>".
+$@
+
+exit 0

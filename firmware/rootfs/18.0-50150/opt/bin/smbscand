@@ -1,0 +1,21 @@
+#!/bin/sh
+PIPENAME=/tmp/smbscanpipe
+RESULTFILE=/tmp/smbscanresult
+
+rm -f $PIPENAME
+mknod -m 666 $PIPENAME p
+
+while [ 1 ];
+do
+    read cmd < $PIPENAME
+
+    if [ "$cmd" = "exit" ]; then
+        break;
+    fi
+
+    $cmd > $RESULTFILE
+    echo $? > $PIPENAME
+done
+
+rm -f $PIPENAME
+rm -f $RESULTFILE

@@ -1,0 +1,175 @@
+/* ********** Body         ********** */
+
+body {
+     background-color: #eeddff;
+     color: #000000;
+}
+
+/* ********** Control bars ********** */
+ 
+div.controls {
+  height: 32px;
+  width:  100%;
+  margin: 10px 0px;
+  background-color: #4aa0e0;
+}
+
+hr.controls {
+  margin-top:       -9px;
+  margin-left:      -1px;
+  border:           0px;
+  color:            #7fbce8;
+  background-color: #7fbce8;
+  height:           5px;
+}
+
+div.controls ul {
+  margin:  2px 0px;
+  padding: 1px;
+  font-family: Arial, Helvetica, sans-serif;
+  color: #FFF;
+  line-height: 30px;
+  white-space: nowrap;
+}
+
+div.controls li {
+  margin: 0px 0px;
+  font-weight: bold;
+  list-style-type: none;
+  display: inline;
+}
+
+div.controls li span {
+  text-decoration: none;
+  margin: -3px;
+  padding: 7px 10px;
+  color: #FFF;
+}
+
+div.controls select {
+  text-decoration: none;
+  margin-right: 5px;
+  color: #000;
+  background-color: #EDF;
+  border-right: solid #EDF 1px;
+}
+
+div.controls li a {
+  text-decoration: none;
+  margin: -2px;
+  padding: 7px 10px;
+  color: #FFF;
+  border-right: solid #EDF 1px;
+}
+
+div.controls li a.selected {
+  color: #FFF;
+  background-color: #7fbce8;
+}
+
+div.controls li a:hover {
+  color: #FFF;
+  background-color: #7fbce8;
+}
+
+
+div.controls li a.disabled {
+  color: #333;
+}
+
+div.controls li a.disabled:hover {
+  background-color: #4aa0e0;
+}
+
+/* ********** Wifi results ********** */
+
+div.channelResults {
+  font-family: Helvetica, sans-serif;
+  float: left;        
+  margin-bottom: 20px;
+  margin-left:   0px;
+  margin-right:  20px;
+  text-align:    center;
+}
+
+table.limits {
+  font-size:       22px;
+  border-width:    2px   2px   2px   2px;
+  border-style:    solid solid solid solid;
+  border-collapse: collapse;
+  text-align:      center;
+  border-color:    black;
+  color:           black;
+}
+
+table.limits th {
+  border-width: 0px  2px    4px  0px;
+  border-style: none solid  none none;
+  border-color: black;
+  padding:      4px;
+}
+
+table.limits td {
+  border-width: 0px  1px    1px   0px;
+  border-style: none dotted solid none;
+  border-color: black;
+  padding:      4px;
+}
+
+table.limits td.blank {
+  border-width: 1px   1px    4px    2px;
+  border-style: none  dotted solid  solid;
+}
+
+table.limits td.label {
+  width:        180px;
+}
+
+table.limits td.min {
+  width:        45px;
+  border-width: 1px   1px    4px    2px;
+  border-style: none  dotted solid  solid;
+}
+
+table.limits td.act {
+  width:        60px;
+  border-width: 0px  1px    4px   0px;
+  border-style: none dotted solid none;    
+}
+
+table.limits td.max {
+  width:        45px;
+  border-width: 0px  1px    4px   0px;
+  border-style: none dotted solid none;    
+}
+
+table.limits td.pass {
+  width:            60px;
+  font-weight:      bold;
+  background-color: #e8d8f8;
+}
+
+table.limits td.fail {
+  width:            60px;
+  font-weight:      bold;
+  color:            #ffffff;
+  background-color: #aa2222;
+}
+
+table.limits td.triplet {
+  width:        45px;
+  border-width: 0px  1px    1px   2px;
+  border-style: none dotted solid solid;
+}
+
+/* ********** Command log ********** */
+
+div.logurl {
+  font-family: Courier, Helvetica, sans-serif;
+  margin-top: 5px;
+}
+
+div.logresults {
+  font-family: Courier, Helvetica, sans-serif;
+  margin-left: 10px;
+}

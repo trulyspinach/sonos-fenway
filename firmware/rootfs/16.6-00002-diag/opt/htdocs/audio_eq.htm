@@ -1,0 +1,40 @@
+<html>
+<head>
+  <title>Audio EQ</title>
+  <script type="text/javascript" src="audio_eq.js"></script>
+  <link rel="stylesheet" href="audio_eq.css" type="text/css" /> 
+</head>
+<body onload=" onPageLoad();">
+  <div id="ab_control" onclick="toggleAB();">
+    <div id="toggle_button">Toggle A/B</div>
+    <div id="AB_indicator"> </div>
+  </div>
+  <div id="import_export">
+    <span id="import_export_title" onclick="toggleImportExport();">Import/Export</span>
+    <div id="import_export_body" style="display:none;">
+      <div class="section">
+        <a class="button" href="eqdata.txt" target="_new">Export...</a>
+        <span class="hint">(Right-click and <em>Save Link As...</em>)</span>
+      </div>
+      <div class="section">
+        <div class="button" onclick="showImportForm();">Import from local file...</div>
+        <div id="import_form" style="display:none;">
+          <form>
+            <p class="hint">Open your saved <code>eqdata.txt</code> file, copy/paste the contents below, then press <em>Upload</em>.</p>
+            <textarea name="presetData" id="import_form_presetData" rows="20" cols="70"></textarea>
+            <p class="hint"><strong>Warning:</strong> This will over-write all presets currently saved!</p>
+            <div id="input_submit"><input type="button" value="Upload" onclick="sendImportForm();"></div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <h1>Audio EQ</h1>
+  <div id="cant_load_warning"><h2>There was an error loading the page.</h2><p>Make sure you are using <a href="http://getfirefox.com">Firefox 3</a>, and that you have JavaScript enabled.</p></div>
+  <div id="message" style="visibility:hidden;">&nbsp;</div>
+
+  <!-- These are build dynamically by the script -->
+  <div id="tabBar"></div>
+  <form id="eqForm"></form>
+</body>
+</html>
