@@ -1,4 +1,9 @@
 # Sonos Fenway
+
+![img](firmware/rootfs/57.10-25140/opt/htdocs/img/icon-S1.png)
+![img](firmware/rootfs/57.10-25140/opt/htdocs/img/icon-S3.png)
+![img](firmware/rootfs/57.10-25140/opt/htdocs/img/icon-Sub.png)
+
 **Everything we know about Fenway**
 
 For general information, hacks about other class of Sonos devices please find them [here](https://github.com/Sonoisseurs/sonor).
