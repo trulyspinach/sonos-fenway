@@ -16,7 +16,7 @@ Sonos Fenway(Model 0x08) are a series of Sonos's product launched starting from 
 * Sonos Sub(Gen 1)[Anvil]
 * Sonos Play:1[AMOEBA]
 * Sonos Play:3[?]
-* 
+
 This is not an exhaustive list.
 
 These models support both S1, S2 controller app and all powered by [MPC8314](https://www.nxp.com/docs/en/data-sheet/MPC8314EEC.pdf).
@@ -60,3 +60,6 @@ It also appears that the uboot does not perform any integrity check for the prov
 While playing around with some poor Sonos Fenway devices that refuses to work due to firmware issues. I am able to gain a lot of in depth understanding of Sonos's software stack so I will try to organize what I know and share them in this repository. Hope these can be helpful and you are more than welcomed to correct me or share your knowledge about these devices by contributing to this repo!
 
 Feel free to open up issues or reach me out!
+
+## Bonus
+[Listen to the pin!](firmware/rootfs/57.10-25140/opt/buzzers/100.mp3)
