@@ -54,12 +54,18 @@ This can also help you to gain shell access to the device by flashing a diagnost
 
 It also appears that the uboot does not perform any integrity check for the provided image, so this could protentially be a nice way to upload custom firmware.
 
+# Q&A
+### Where is the part that handle Sonos services in the root fs?
+Look for `anacapad`. This huge binary handles all Sonos's related services including accessing music services, serving <ip>:1400, LED control and audio playback.
+  
+### How can I test with modified files that are in rootfs which is mounted as readonly?
+You can `wget` or `ftpget` the file to `jffs` then bind mount the target path: `mount --bind <your_file> <path to replace>`
 
-## Why?
+# Why?
 
 While playing around with some poor Sonos Fenway devices that refuses to work due to firmware issues. I am able to gain a lot of in depth understanding of Sonos's software stack so I will try to organize what I know and share them in this repository. Hope these can be helpful and you are more than welcomed to correct me or share your knowledge about these devices by contributing to this repo!
 
 Feel free to open up issues or reach me out!
 
-## Bonus
+# Bonus
 [Listen to the pin!](firmware/rootfs/57.10-25140/opt/buzzers/100.mp3)
