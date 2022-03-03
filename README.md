@@ -1,6 +1,7 @@
 # Sonos Fenway
 **Everything we know about Fenway**
 
+For general information, hacks about other class of Sonos devices please find them [here](https://github.com/Sonoisseurs/sonor).
 
 ## What?
 
