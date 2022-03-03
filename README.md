@@ -61,6 +61,11 @@ Look for `anacapad`. This huge binary handles all Sonos's related services inclu
 ### How can I test with modified files that are in rootfs which is mounted as readonly?
 You can `wget` or `ftpget` the file to `jffs` then bind mount the target path: `mount --bind <your_file> <path to replace>`
 
+### How do I change device's serial number?
+`mdputil -wfs <serial number>`
+  
+Doing so will make your signature invaild so don't do this just for fun. 
+  
 # Why?
 
 While playing around with some poor Sonos Fenway devices that refuses to work due to firmware issues. I am able to gain a lot of in depth understanding of Sonos's software stack so I will try to organize what I know and share them in this repository. Hope these can be helpful and you are more than welcomed to correct me or share your knowledge about these devices by contributing to this repo!
