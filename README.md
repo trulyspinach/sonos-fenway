@@ -21,6 +21,18 @@ This is not an exhaustive list.
 
 These models support both S1, S2 controller app and all powered by [MPC8314](https://www.nxp.com/docs/en/data-sheet/MPC8314EEC.pdf).
 
+# Custom Firmware
+
+A proof of concept for custom firmware have been uploaded [here](https://github.com/trulyspinach/sonos-fenway/tree/main/custom).
+
+This firmware aim to make subsequence researches easier and features the following:
+* SSH and telnet for `root` user by default with a password `fenway`.
+* Dumping system over http server via: `http://<IP>:1400/root/<path to file>`. e.g. `http://<IP>:1400/root/VERSION`
+* Normal access to Sonos services and playback.
+* __Optimized setup ringtone audio.__
+
+These firmware can be flashed to the device over tftp using the [`upgrade` command in U-boot](https://github.com/trulyspinach/sonos-fenway#upgrade).
+
 # Getting Shell Access
 
 In general there are two ways for you to get root shell in these devices: UART and telnet. However, both are disabled by default in production devices. You are lucky if whichever one you are trying to hack are running diagnostic firmware, which gives you root shell over UART by default. In most cases where your device are running production firmware, good news is you can flash a diagnostic firmware at uboot(see sections below for detail) to enable shell.
@@ -37,8 +49,8 @@ or for newer firmwares:
 #mdputil -wfP 1
 ```
 
-# Uboot
-Accessing the Uboot shell is as easy as hooking up the UART. The connector footprint is kinda obvious so I won't cover details here, just look for a 4 pin JST 1.25mm footprint. If you're really having a hard time locating them try searching around the internet for images. You do need to spam key presses right after device power on to interrupt autoboot.
+# U-boot
+Accessing the U-boot shell is as easy as hooking up the UART. The connector footprint is kinda obvious so I won't cover details here, just look for a 4 pin JST 1.25mm footprint. If you're really having a hard time locating them try searching around the internet for images. You do need to spam key presses right after device power on to interrupt autoboot.
 
 ## sonosboot
 Fenway uboot have a command `sonosboot` that warp around memory booting with a version(`bootgen`) and integrity check to determine which section(`bootsect`) to boot. If you want to boot the least fresh section do `sonosboot fallback`.
