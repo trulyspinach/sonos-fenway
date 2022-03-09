@@ -23,10 +23,10 @@ These models support both S1, S2 controller app and all powered by [MPC8314](htt
 
 # Custom Firmware
 
-A proof of concept for custom firmware have been uploaded [here](https://github.com/trulyspinach/sonos-fenway/tree/main/custom).
+A proof of concept for custom firmware was uploaded [here](https://github.com/trulyspinach/sonos-fenway/tree/main/custom).
 
 This firmware aim to make subsequence researches easier and features the following:
-* SSH and telnet for `root` user by default with a password `fenway`.
+* SSH and telnet for `root` user enabled by default with a password: `fenway`.
 * Dumping system over http server via: `http://<IP>:1400/root/<path to file>`. e.g. `http://<IP>:1400/root/VERSION`
 * Normal access to Sonos services and playback.
 * __Optimized setup ringtone audio.__
