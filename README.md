@@ -21,6 +21,16 @@ This is not an exhaustive list.
 
 These models support both S1, S2 controller app and all powered by [MPC8314](https://www.nxp.com/docs/en/data-sheet/MPC8314EEC.pdf).
 
+# Toolchain
+
+GCC cross compile toolchain can be set up to produce executable for Fenway devices, the screenshot below shows a Sonos Play:1 running Python3:
+
+![img](misc/python3.7/running_py.png)
+
+A Python3.7 with minimum standard library files required to get to REPL can be found [here](misc/python3.7/).
+
+__TODO: more detail on setting up toolchain.__
+
 # Custom Firmware
 
 A proof of concept for custom firmware was uploaded [here](https://github.com/trulyspinach/sonos-fenway/tree/main/custom).
